@@ -10,7 +10,7 @@ protoc-rust = "2.24.1"
 async-trait = "0.1.32"
 bytes = "1.1.0"
 log = "0.4.14"
-protobuf = { version = "2.24.1", optional = true }
+protobuf = { version = "3.7.2", optional = true }
 num-traits = "0.2.12"
 num-derive = "0.3.3"
 thiserror = "1.0.30"
