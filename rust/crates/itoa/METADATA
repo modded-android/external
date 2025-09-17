@@ -1,0 +1,23 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update rust/crates/itoa
+# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+
+name: "itoa"
+description: "Fast integer primitive to string conversion"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/itoa"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/itoa/itoa-1.0.5.crate"
+  }
+  version: "1.0.5"
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2023
+    month: 2
+    day: 2
+  }
+}

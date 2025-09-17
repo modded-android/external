@@ -1,0 +1,20 @@
+name: "der-parser"
+description: "Parser/encoder for ASN.1 BER/DER data"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/der-parser"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/der-parser/der-parser-6.0.1.crate"
+  }
+  version: "6.0.1"
+  # Dual-licensed, using the least restrictive per go/thirdpartylicenses#same.
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2022
+    month: 12
+    day: 9
+  }
+}

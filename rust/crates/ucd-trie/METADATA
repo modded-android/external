@@ -1,0 +1,23 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update rust/crates/ucd-trie
+# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+
+name: "ucd-trie"
+description: "A trie for storing Unicode codepoint sets and maps."
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/ucd-trie"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/ucd-trie/ucd-trie-0.1.5.crate"
+  }
+  version: "0.1.5"
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2022
+    month: 12
+    day: 19
+  }
+}

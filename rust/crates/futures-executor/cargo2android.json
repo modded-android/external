@@ -1,0 +1,14 @@
+{
+  "apex-available": [
+    "//apex_available:platform",
+    "com.android.btservices",
+    "com.android.resolv",
+    "com.android.virt"
+  ],
+  "dependencies": true,
+  "device": true,
+  "features": "thread-pool",
+  "min-sdk-version": "29",
+  "run": true,
+  "tests": true
+}

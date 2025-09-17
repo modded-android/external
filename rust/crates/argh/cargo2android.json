@@ -1,0 +1,15 @@
+{
+  "apex-available": [
+    "//apex_available:platform",
+    "com.android.virt"
+  ],
+  "device": true,
+  "run": true,
+  "tests": true,
+  "dependency-blocklist": [
+    "trybuild"
+  ],
+  "test-blocklist": [
+    "tests/compiletest.rs"
+  ]
+}

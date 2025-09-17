@@ -1,0 +1,19 @@
+name: "gdbstub_arch"
+description: "Implementations of `gdbstub::arch::Arch` for various architectures."
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/gdbstub_arch"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/gdbstub_arch/gdbstub_arch-0.2.4.crate"
+  }
+  version: "0.2.4"
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2022
+    month: 8
+    day: 22
+  }
+}

@@ -1,0 +1,9 @@
+/target
+**/*.rs.bk
+Cargo.lock
+
+**/.gdb_history
+# The GDB client may core dump if the target is implemented incorrectly
+**/core
+
+.vscode

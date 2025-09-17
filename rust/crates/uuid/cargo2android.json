@@ -1,0 +1,11 @@
+{
+  "add-toplevel-block": "cargo2android_nostd.bp",
+  "apex-available": [
+    "//apex_available:platform",
+    "com.android.virt"
+  ],
+  "dependencies": true,
+  "device": true,
+  "features": "serde,std,v1,v4",
+  "run": true
+}

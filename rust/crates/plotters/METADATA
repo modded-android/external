@@ -1,0 +1,23 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update rust/crates/plotters
+# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+
+name: "plotters"
+description: "A Rust drawing library focus on data plotting for both WASM and native applications"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/plotters"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/plotters/plotters-0.3.4.crate"
+  }
+  version: "0.3.4"
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2022
+    month: 12
+    day: 13
+  }
+}
