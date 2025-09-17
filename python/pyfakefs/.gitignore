@@ -1,0 +1,22 @@
+*.pyc
+*.egg-info/
+.tox/
+
+# Eclipse
+.settings
+.project
+.pydevproject
+
+# PyCharm
+.idea/
+
+# pytest
+.cache/
+.pytest_cache/
+
+# autodoc created by sphinx
+gh-pages/
+
+# Distribution creation
+dist/
+build/
