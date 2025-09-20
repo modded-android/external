@@ -1,0 +1,4 @@
+URL: https://aomedia.googlesource.com/aom/
+Version: v3.6.0
+Local Modifications:
+* cherry-pick 4781b9f7f6 nonrd_opt: align scan tables
