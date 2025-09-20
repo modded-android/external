@@ -1,0 +1,18 @@
+{
+  "apex-available": [
+    "//apex_available:platform",
+    "com.android.virt"
+  ],
+  "device": true,
+  "features": "zlib",
+  "run": true,
+  "patch": "patches/Android.bp.patch",
+  "tests": true,
+  "test-data": [
+    "tests/gunzip.rs=tests/corrupt-gz-file.bin",
+    "tests/gunzip.rs=tests/good-file.gz",
+    "tests/gunzip.rs=tests/good-file.txt",
+    "tests/gunzip.rs=tests/multi.gz",
+    "tests/gunzip.rs=tests/multi.txt"
+  ]
+}

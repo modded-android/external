@@ -1,0 +1,12 @@
+{
+  "add-module-block": "cargo2android_glibc.bp",
+  "apex-available": [
+    "//apex_available:platform",
+    "//apex_available:anyapex"
+  ],
+  "dependencies": true,
+  "device": true,
+  "min-sdk-version": "29",
+  "run": true,
+  "vendor-available": true
+}

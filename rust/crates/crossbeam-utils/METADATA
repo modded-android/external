@@ -1,0 +1,23 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update rust/crates/crossbeam-utils
+# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+
+name: "crossbeam-utils"
+description: "Utilities for concurrent programming"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/crossbeam-utils"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/crossbeam-utils/crossbeam-utils-0.8.15.crate"
+  }
+  version: "0.8.15"
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2023
+    month: 3
+    day: 6
+  }
+}

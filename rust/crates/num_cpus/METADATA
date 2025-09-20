@@ -1,0 +1,23 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update rust/crates/num_cpus
+# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+
+name: "num_cpus"
+description: "Get the number of CPUs on a machine."
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/num_cpus"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/num_cpus/num_cpus-1.15.0.crate"
+  }
+  version: "1.15.0"
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2023
+    month: 2
+    day: 3
+  }
+}

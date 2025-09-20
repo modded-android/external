@@ -1,0 +1,13 @@
+{
+  "apex-available": [
+    "//apex_available:platform",
+    "//apex_available:anyapex"
+  ],
+  "dependencies": true,
+  "device": true,
+  "features": "",
+  "min-sdk-version": "29",
+  "run": true,
+  "tests": true,
+  "vendor-available": true
+}

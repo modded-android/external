@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Copyright 2021 The ChromiumOS Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+set -ex
+
+# Build cargo-doc
+# $ ./tools/cargo-doc --target-dir /path/to/dir
+
+cargo doc \
+    --workspace \
+    --no-deps \
+    --exclude crosvm-fuzz \
+    --features="all-x86_64" \
+    --document-private-items \
+    "$@"

@@ -1,0 +1,20 @@
+name: "libc"
+description: "()"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/libc"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/libc/libc-0.2.139.crate"
+  }
+  version: "0.2.139"
+  # Dual-licensed, using the least restrictive per go/thirdpartylicenses#same.
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2023
+    month: 2
+    day: 3
+  }
+}

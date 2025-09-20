@@ -1,0 +1,17 @@
+/lib
+out
+/run
+
+.classpath
+.gradle
+.project
+.settings
+*.iml
+
+.DS_Store
+*.swp
+
+.java-version
+
+# Ignore Gradle build output directory
+build

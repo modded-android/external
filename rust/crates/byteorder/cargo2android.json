@@ -1,0 +1,7 @@
+{
+  "add-toplevel-block": "cargo2android_nostd.bp",
+  "dependencies": true,
+  "device": true,
+  "run": true,
+  "vendor-available": true
+}

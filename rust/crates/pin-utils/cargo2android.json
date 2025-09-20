@@ -1,0 +1,8 @@
+{
+  "dependencies": true,
+  "device": true,
+  "min-sdk-version": "29",
+  "vendor-available": true,
+  "run": true,
+  "tests": true
+}

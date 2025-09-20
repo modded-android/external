@@ -1,0 +1,11 @@
+{
+  "apex-available": [
+    "//apex_available:platform",
+    "com.android.virt"
+  ],
+  "dependency-blocklist": [
+    "data_encoding"
+  ],
+  "device": true,
+  "run": true
+}

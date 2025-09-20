@@ -1,0 +1,20 @@
+name: "android_logger"
+description: "()"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://crates.io/crates/android_logger"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/android_logger/android_logger-0.12.0.crate"
+  }
+  version: "0.12.0"
+  # Dual-licensed, using the least restrictive per go/thirdpartylicenses#same.
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2023
+    month: 2
+    day: 2
+  }
+}

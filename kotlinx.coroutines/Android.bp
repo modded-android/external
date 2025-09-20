@@ -1,0 +1,198 @@
+package {
+    default_applicable_licenses: ["external_kotlinx.coroutines_license"],
+}
+
+// Added automatically by a large-scale-change that took the approach of
+// 'apply every license found to every target'. While this makes sure we respect
+// every license restriction, it may not be entirely correct.
+//
+// e.g. GPL in an MIT project might only apply to the contrib/ directory.
+//
+// Please consider splitting the single license below into multiple licenses,
+// taking care not to lose any license_kind information, and overriding the
+// default license using the 'licenses: [...]' property on targets as needed.
+//
+// For unused files, consider creating a 'fileGroup' with "//visibility:private"
+// to attach the license to, and including a comment whether the files may be
+// used in the current project.
+//
+// large-scale-change included anything that looked like it might be a license
+// text as a license_text. e.g. LICENSE, NOTICE, COPYING etc.
+//
+// Please consider removing redundant or irrelevant files from 'license_text:'.
+// See: http://go/android-license-faq
+license {
+    name: "external_kotlinx.coroutines_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+        "SPDX-license-identifier-MIT",
+    ],
+    license_text: [
+        "LICENSE",
+        "LICENSE.txt",
+        "license/**/*",
+    ],
+}
+
+java_library {
+    name: "kotlinx_coroutines",
+    host_supported: true,
+    sdk_version: "current",
+    min_sdk_version: "28",
+    srcs: ["kotlinx-coroutines-core/jvm/src/**/*.kt"],
+    common_srcs: [
+        "kotlinx-coroutines-core/common/src/**/*.kt",
+        "kotlinx-coroutines-core/concurrent/src/**/*.kt",
+    ],
+    exclude_srcs: [
+        "kotlinx-coroutines-core/jvm/src/debug/**/*.kt",
+        "kotlinx-coroutines-core/jvm/src/test_/TestCoroutineContext.kt",
+    ],
+    java_resource_dirs: ["kotlinx-coroutines-core/jvm/resources"],
+    static_libs: [
+        "kotlinx_atomicfu",
+    ],
+    libs: ["kotlinx-coroutines-android-annotation-stubs"],
+    kotlincflags: [
+        "-Xmulti-platform",
+        "-opt-in=kotlin.RequiresOptIn",
+        "-opt-in=kotlin.experimental.ExperimentalTypeInference",
+        "-opt-in=kotlin.ExperimentalMultiplatform",
+        "-opt-in=kotlinx.coroutines.DelicateCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.FlowPreview",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex"
+    ],
+    target: {
+        host: {
+            libs: ["annotations"], // for android.annotation.SuppressLint
+        },
+    },
+}
+
+java_library {
+    name: "kotlinx_coroutines_android",
+    sdk_version: "current",
+    min_sdk_version: "28",
+    srcs: ["ui/kotlinx-coroutines-android/src/**/*.kt"],
+    java_resource_dirs: ["ui/kotlinx-coroutines-android/resources"],
+    kotlincflags: [
+        "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    ],
+    static_libs: [
+        "kotlinx_coroutines",
+    ],
+    libs: [
+        "androidx.annotation_annotation",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex"
+    ],
+}
+
+java_library {
+    name: "kotlinx_coroutines_test",
+    host_supported: true,
+    srcs: ["kotlinx-coroutines-test/jvm/src/**/*.kt"],
+    common_srcs: ["kotlinx-coroutines-test/common/src/**/*.kt"],
+    java_resource_dirs: ["kotlinx-coroutines-test/jvm/resources"],
+    kotlincflags: [
+        "-Xmulti-platform",
+        "-opt-in=kotlin.ExperimentalMultiplatform",
+        "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    ],
+    libs: [
+        "kotlinx_coroutines",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex"
+    ],
+}
+
+// Compile stub implementations of annotations used by kotlinx-coroutines but not present in the
+// Android tree.
+java_library {
+    name: "kotlinx-coroutines-android-annotation-stubs",
+    host_supported: true,
+    sdk_version: "core_current",
+    srcs: ["android-annotation-stubs/src/**/*.java"],
+}
+
+// Temporary aliases for kotlinx-coroutines-core, kotlinx-coroutines-core-jvm and
+// kotlinx-coroutines-android
+
+java_library {
+    name: "kotlinx-coroutines-core",
+    host_supported: true,
+    sdk_version: "current",
+    min_sdk_version: "28",
+    static_libs: ["kotlinx_coroutines"],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex"
+    ],
+}
+
+java_library {
+    name: "kotlinx-coroutines-core-jvm",
+    host_supported: true,
+    sdk_version: "current",
+    min_sdk_version: "28",
+    static_libs: ["kotlinx_coroutines"],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex"
+    ],
+}
+
+java_library {
+    name: "kotlinx-coroutines-android",
+    sdk_version: "current",
+    min_sdk_version: "28",
+    static_libs: [
+        "kotlinx_coroutines_android",
+        "kotlinx_coroutines",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex"
+    ],
+}
+
+filegroup {
+    name: "kotlinx-coroutines-play-services",
+    srcs: ["integration/kotlinx-coroutines-play-services/src/**/*.kt"],
+    visibility: ["//visibility:public"],
+}
+
+// Maven coordinate: org.jetbrains.kotlinx:kotlinx-coroutines-guava
+java_library {
+    name: "kotlinx_coroutines_guava",
+    host_supported: true,
+    srcs: ["integration/kotlinx-coroutines-guava/src/**/*.kt"],
+    kotlincflags: [
+        "-opt-in=kotlin.RequiresOptIn",
+        "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    ],
+    libs: [
+        "kotlinx_coroutines",
+        "kotlin-stdlib-jdk8",
+        "guava",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+}
+
