@@ -1,0 +1,234 @@
+load("@fmeum_rules_jni//jni:defs.bzl", "cc_jni_library")
+load("//bazel:compat.bzl", "SKIP_ON_WINDOWS")
+
+cc_library(
+    name = "jazzer_main",
+    srcs = ["jazzer_main.cpp"],
+    deps = [
+        ":jvm_tooling_lib",
+        "@com_google_absl//absl/strings",
+        "@fmeum_rules_jni//jni:libjvm",
+        "@jazzer_com_github_gflags_gflags//:gflags",
+    ],
+)
+
+cc_library(
+    name = "jvm_tooling_lib",
+    srcs = ["jvm_tooling.cpp"],
+    hdrs = ["jvm_tooling.h"],
+    tags = [
+        # Should be built through the cc_17_library driver_lib.
+        "manual",
+    ],
+    deps = [
+        "@bazel_tools//tools/cpp/runfiles",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
+        "@fmeum_rules_jni//jni",
+        "@jazzer_com_github_gflags_gflags//:gflags",
+    ],
+)
+
+DYNAMIC_SYMBOLS_TO_EXPORT = [
+    "__sanitizer_cov_8bit_counters_init",
+    "__sanitizer_cov_pcs_init",
+    "__sanitizer_cov_trace_cmp1",
+    "__sanitizer_cov_trace_cmp4",
+    "__sanitizer_cov_trace_cmp4",
+    "__sanitizer_cov_trace_cmp8",
+    "__sanitizer_cov_trace_const_cmp1",
+    "__sanitizer_cov_trace_const_cmp4",
+    "__sanitizer_cov_trace_const_cmp4",
+    "__sanitizer_cov_trace_const_cmp8",
+    "__sanitizer_cov_trace_div4",
+    "__sanitizer_cov_trace_div8",
+    "__sanitizer_cov_trace_gep",
+    "__sanitizer_cov_trace_pc_indir",
+    "__sanitizer_cov_trace_switch",
+    "__sanitizer_weak_hook_memcmp",
+    "__sanitizer_weak_hook_memmem",
+    "__sanitizer_weak_hook_strcasecmp",
+    "__sanitizer_weak_hook_strcasestr",
+    "__sanitizer_weak_hook_strcmp",
+    "__sanitizer_weak_hook_strncasecmp",
+    "__sanitizer_weak_hook_strncmp",
+    "__sanitizer_weak_hook_strstr",
+    "bcmp",
+    "jazzer_initialize_native_hooks",
+    "memcmp",
+    "memmem",
+    "strcasecmp",
+    "strcasestr",
+    "strcmp",
+    "strncasecmp",
+    "strncmp",
+    "strstr",
+]
+
+cc_library(
+    name = "native_fuzzer_hooks",
+    srcs = ["native_fuzzer_hooks.c"],
+    linkopts = select({
+        "@platforms//os:linux": [
+            "-Wl,--export-dynamic-symbol=" + symbol
+            for symbol in DYNAMIC_SYMBOLS_TO_EXPORT
+        ] + [
+            "-ldl",
+        ],
+        "@platforms//os:macos": [
+            "-rdynamic",
+            "-ldl",
+        ],
+        "//conditions:default": [],
+    }),
+    target_compatible_with = SKIP_ON_WINDOWS,
+    deps = ["//driver/src/main/native/com/code_intelligence/jazzer/driver:sanitizer_hooks_with_pc"],
+    alwayslink = True,
+)
+
+cc_binary(
+    name = "jazzer_driver",
+    data = [
+        "//agent:jazzer_agent_deploy",
+    ],
+    linkopts = select({
+        "//:clang_on_linux": ["-fuse-ld=lld"],
+        "//conditions:default": [],
+    }),
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+    deps = [":jazzer_main"],
+)
+
+alias(
+    name = "using_toolchain_on_osx",
+    actual = select({
+        "//third_party:uses_toolchain": "@platforms//os:osx",
+        # In order to achieve AND semantics, reference a setting that is known
+        # not to apply.
+        "//conditions:default": "//third_party:uses_toolchain",
+    }),
+)
+
+cc_binary(
+    name = "jazzer_driver_asan",
+    data = [
+        "//agent:jazzer_agent_deploy",
+    ],
+    linkopts = select({
+        "@platforms//os:windows": [
+            # Sanitizer runtimes have to be linked manually on Windows:
+            # https://devblogs.microsoft.com/cppblog/addresssanitizer-asan-for-windows-with-msvc/
+            "/wholearchive:clang_rt.asan-x86_64.lib",
+            "/wholearchive:clang_rt.asan_cxx-x86_64.lib",
+        ],
+        "//conditions:default": [
+            "-fsanitize=address",
+            "-static-libsan",
+        ],
+    }) + select({
+        "//:clang_on_linux": ["-fuse-ld=lld"],
+        "//conditions:default": [],
+    }),
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+    deps = [":jazzer_main"] + select({
+        # There is no static ASan runtime on macOS, so link to the dynamic
+        # runtime library if on macOS and using the toolchain.
+        ":using_toolchain_on_osx": ["@llvm_toolchain_llvm//:macos_asan_dynamic"],
+        "//conditions:default": [],
+    }) + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [":native_fuzzer_hooks"],
+    }),
+)
+
+cc_binary(
+    name = "jazzer_driver_ubsan",
+    data = [
+        "//agent:jazzer_agent_deploy",
+    ],
+    linkopts = select({
+        "@platforms//os:windows": [
+            # Sanitizer runtimes have to be linked manually on Windows:
+            # https://devblogs.microsoft.com/cppblog/addresssanitizer-asan-for-windows-with-msvc/
+            "/wholearchive:clang_rt.ubsan_standalone-x86_64.lib",
+            "/wholearchive:clang_rt.ubsan_standalone_cxx-x86_64.lib",
+        ],
+        "//conditions:default": [
+            "-fsanitize=undefined",
+            # Link UBSan statically, even on macOS.
+            "-static-libsan",
+            "-fsanitize-link-c++-runtime",
+        ],
+    }) + select({
+        "//:clang_on_linux": ["-fuse-ld=lld"],
+        "//conditions:default": [],
+    }),
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":jazzer_main",
+    ] + select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [":native_fuzzer_hooks"],
+    }),
+)
+
+cc_test(
+    name = "jvm_tooling_test",
+    size = "small",
+    srcs = ["jvm_tooling_test.cpp"],
+    args = [
+        "--cp=jazzer/$(rootpath //driver/testdata:fuzz_target_mocks_deploy.jar)",
+    ],
+    data = [
+        "//agent:jazzer_agent_deploy",
+        "//driver/testdata:fuzz_target_mocks_deploy.jar",
+    ],
+    includes = ["."],
+    deps = [
+        ":jvm_tooling_lib",
+        ":test_main",
+        "@bazel_tools//tools/cpp/runfiles",
+        "@googletest//:gtest",
+        "@jazzer_com_github_gflags_gflags//:gflags",
+    ],
+)
+
+cc_test(
+    name = "fuzzed_data_provider_test",
+    size = "medium",
+    srcs = ["fuzzed_data_provider_test.cpp"],
+    args = [
+        "--cp=jazzer/$(rootpath //driver/testdata:fuzz_target_mocks_deploy.jar)",
+    ],
+    copts = select({
+        "@platforms//os:windows": ["/std:c++17"],
+        "//conditions:default": ["-std=c++17"],
+    }),
+    data = [
+        "//agent:jazzer_agent_deploy",
+        "//driver/testdata:fuzz_target_mocks_deploy.jar",
+    ],
+    includes = ["."],
+    deps = [
+        ":jvm_tooling_lib",
+        ":test_main",
+        "//driver/src/main/native/com/code_intelligence/jazzer/driver:fuzzed_data_provider",
+        "@bazel_tools//tools/cpp/runfiles",
+        "@googletest//:gtest",
+        "@jazzer_com_github_gflags_gflags//:gflags",
+    ],
+)
+
+cc_library(
+    name = "test_main",
+    srcs = ["test_main.cpp"],
+    linkstatic = True,
+    deps = [
+        "@fmeum_rules_jni//jni:libjvm",
+        "@googletest//:gtest",
+        "@jazzer_com_github_gflags_gflags//:gflags",
+    ],
+)
