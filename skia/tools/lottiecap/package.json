@@ -2,9 +2,9 @@
   "dependencies": {
     "command-line-args": "^5.0.2",
     "command-line-usage": "^5.0.3",
-    "express": "^4.16.3",
+    "express": "^5.1.0",
     "lottie-web": "5.2.1",
-    "node-fetch": "^2.2.0",
-    "puppeteer": "~1.6.2"
+    "node-fetch": "^3.3.2",
+    "puppeteer": "~24.22.3"
   }
 }
