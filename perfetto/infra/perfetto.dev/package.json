@@ -7,7 +7,7 @@
   "author": "Perfetto Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "mermaid": "^9.4.3"
+    "mermaid": "^10.9.4"
   },
   "devDependencies": {
     "argparse": "^2.0.1",
@@ -17,6 +17,6 @@
     "marked": "^16.3.0",
     "node-sass": "^9.0.0",
     "node-watch": "^0.7.3",
-    "protobufjs": "^6.11.4"
+    "protobufjs": "^7.5.4"
   }
 }
