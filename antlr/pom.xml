@@ -57,7 +57,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk>1.8</jdk>
-        <junit.version>4.13</junit.version>
+        <junit.version>4.13.1</junit.version>
         <st4.version>4.3.1</st4.version>
         <antlr.version>2.7.7</antlr.version>
         <stringtemplate.version>3.2.1</stringtemplate.version>
