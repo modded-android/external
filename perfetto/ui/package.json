@@ -31,7 +31,7 @@
     "protobufjs": "^6.11.4",
     "util": "^0.12.3",
     "uuid": "^9.0.0",
-    "vega-lite": "^5.9.0"
+    "vega-lite": "^6.4.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
